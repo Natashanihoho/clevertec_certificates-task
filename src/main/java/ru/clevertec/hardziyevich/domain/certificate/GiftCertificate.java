@@ -1,13 +1,15 @@
-package ru.clevertec.hardziyevich.domain.certificates;
+package ru.clevertec.hardziyevich.domain.certificate;
 
 import lombok.*;
-import ru.clevertec.hardziyevich.domain.tags.Tag;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import ru.clevertec.hardziyevich.domain.tag.Tag;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,13 +36,15 @@ public class GiftCertificate {
 
     @Column(name = "duration")
     @Min(1)
-    Integer duration;
+    private Integer duration;
 
-    @Column(name = "create_date", nullable = false)
-    LocalDateTime createDate;
+    @CreationTimestamp
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
 
+    @UpdateTimestamp
     @Column(name = "last_update_date")
-    LocalDateTime lastUpdateDate;
+    private LocalDateTime lastUpdateDate;
 
     @Builder.Default
     @ManyToMany
@@ -49,9 +53,7 @@ public class GiftCertificate {
             joinColumns = @JoinColumn(name = "certificate_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<Tag> tags = new HashSet<>();
+    private List<Tag> tags = new ArrayList<>();
 
-    public void addTag(Tag tag) {
-        tags.add(tag);
-    }
+
 }

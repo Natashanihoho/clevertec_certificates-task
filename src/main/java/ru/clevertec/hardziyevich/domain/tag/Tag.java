@@ -1,12 +1,11 @@
-package ru.clevertec.hardziyevich.domain.tags;
+package ru.clevertec.hardziyevich.domain.tag;
 
 import lombok.*;
-import ru.clevertec.hardziyevich.domain.certificates.GiftCertificate;
+import ru.clevertec.hardziyevich.domain.certificate.GiftCertificate;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 @Getter
 @Setter
 @Entity
@@ -25,9 +24,7 @@ public class Tag {
 
     @Builder.Default
     @ManyToMany(mappedBy = "tags")
-    private Set<GiftCertificate> giftCertificates = new HashSet<>();
+    private List<GiftCertificate> giftCertificates = new ArrayList<>();
 
-    public void addGiftCertificates(GiftCertificate giftCertificate) {
-        giftCertificates.add(giftCertificate);
-    }
+
 }
