@@ -1,13 +1,13 @@
 package ru.clevertec.hardziyevich;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.clevertec.hardziyevich.configuration.IT;
+import ru.clevertec.hardziyevich.configuration.RepositoryConfiguration;
 import ru.clevertec.hardziyevich.domain.tag.Tag;
 import ru.clevertec.hardziyevich.domain.tag.TagRepository;
 
-@IT
-class ApplicationTests {
+class ApplicationTests extends RepositoryConfiguration {
 
 	@Autowired
 	TagRepository tagRepository;
@@ -15,10 +15,12 @@ class ApplicationTests {
 	@Test
 	void contextLoads() {
 		Tag tag = tagRepository.save(Tag.builder()
-				.name("testcontainer")
+				.name("testTag")
 				.build()
 		);
-		System.out.println(tag.getName() + " id:" + tag.getId());
+		Assertions.assertNotNull(tag);
+		Assertions.assertTrue(tag.getId() > 0);
+		Assertions.assertEquals("testTag", tag.getName());
 	}
 
 }

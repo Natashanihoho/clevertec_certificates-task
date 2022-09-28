@@ -1,7 +1,6 @@
 package ru.clevertec.hardziyevich.domain.certificate;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,16 +16,14 @@ import ru.clevertec.hardziyevich.domain.tag.TagRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CertificateTest {
+public class CertificateServiceTest {
     @Mock
     private GiftCertificateRepository giftCertificateRepository;
 
