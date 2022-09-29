@@ -1,6 +1,8 @@
 package ru.clevertec.hardziyevich.domain.certificate;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -58,8 +60,9 @@ public class GiftCertificateService {
                 .orElseThrow(() -> new ApplicationException("Gift certificate does not exist", HttpStatus.BAD_REQUEST));
     }
 
-    public List<GiftCertificateReadDto> findAllByTag(String tagName) {
-        return giftCertificateRepository.findAllByTagName(tagName)
+    public List<GiftCertificateReadDto> findAllByTag(String tagName, Integer pageNumber) {
+        Pageable pageable = PageRequest.of(Objects.isNull(pageNumber) ? 0 : pageNumber - 1, 10);
+        return giftCertificateRepository.findAllByTagName(tagName, pageable)
                 .stream()
                 .map(giftCertificateMapper::mapToGiftCertificateReadDto)
                 .collect(Collectors.toList());
@@ -77,12 +80,14 @@ public class GiftCertificateService {
                 .orElseThrow(() -> new ApplicationException("Gift certificate does not exist", HttpStatus.BAD_REQUEST));
     }
 
-    public List<GiftCertificateReadDto> findAllAndSort(String field) {
-        return giftCertificateRepository.findAll(Sort.by(Sort.Direction.ASC, field))
+    public List<GiftCertificateReadDto> findAllAndSort(String field, Integer pageNumber) {
+        Pageable pageable = PageRequest.of(Objects.isNull(pageNumber) ? 0 : pageNumber - 1 ,10, Sort.by(Sort.Direction.ASC, field));
+        return giftCertificateRepository.findAll(pageable)
                 .stream()
                 .map(giftCertificateMapper::mapToGiftCertificateReadDto)
                 .collect(Collectors.toList());
     }
+
     @Transactional
     public GiftCertificateReadDto updateById(Integer id, GiftCertificatePostDto giftCertificatePostDto) {
         return giftCertificateRepository.findById(id)

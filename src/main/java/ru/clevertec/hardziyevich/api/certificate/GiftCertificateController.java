@@ -26,9 +26,10 @@ public class GiftCertificateController {
         return ResponseEntity.ok(giftCertificateService.findById(id));
     }
 
-    @GetMapping("/find_all_by_tag/{name}")
-    public ResponseEntity<List<GiftCertificateReadDto>> findAllByTag(@PathVariable @NotNull String name) {
-        return ResponseEntity.ok(giftCertificateService.findAllByTag(name));
+    @GetMapping(value = {"/find_all_by_tag/{name}", "/find_all_by_tag/{name}/{pageNumber}"})
+    public ResponseEntity<List<GiftCertificateReadDto>> findAllByTag(@PathVariable @NotNull String name,
+                                                                     @PathVariable (required = false) Integer pageNumber) {
+        return ResponseEntity.ok(giftCertificateService.findAllByTag(name, pageNumber));
     }
 
     @GetMapping("/find_by_name/{name}")
@@ -41,9 +42,10 @@ public class GiftCertificateController {
         return ResponseEntity.ok(giftCertificateService.findByDescriptionPart(text));
     }
 
-    @GetMapping("/find_all/sort_by/{field}")
-    public ResponseEntity<List<GiftCertificateReadDto>> findAllAndSort(@PathVariable @NotNull String field) {
-        return ResponseEntity.ok(giftCertificateService.findAllAndSort(field));
+    @GetMapping(value = {"/find_all/sort_by/{field}", "/find_all/sort_by/{field}/{pageNumber}"})
+    public ResponseEntity<List<GiftCertificateReadDto>> findAllAndSort(@PathVariable @NotNull String field,
+                                                                       @PathVariable (required = false) Integer pageNumber) {
+        return ResponseEntity.ok(giftCertificateService.findAllAndSort(field, pageNumber));
     }
 
     @PutMapping("/update/{id}")
