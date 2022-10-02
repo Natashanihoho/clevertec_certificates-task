@@ -1,4 +1,4 @@
-package ru.clevertec.hardziyevich.infrastructure;
+package ru.clevertec.hardziyevich.api.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 public class ApplicationException extends RuntimeException {
 
     private final HttpStatus httpStatus;
+    private final Error error;
 
-    public ApplicationException(String message, HttpStatus httpStatus) {
+    public ApplicationException(String message, HttpStatus httpStatus, Error error) {
         super(message);
         this.httpStatus = httpStatus;
+        this.error = error;
     }
 }

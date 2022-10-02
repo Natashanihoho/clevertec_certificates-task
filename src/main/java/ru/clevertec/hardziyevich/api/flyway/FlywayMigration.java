@@ -16,7 +16,7 @@ public class FlywayMigration {
 
     @PreDestroy
     private void destroy() {
-
         flyway.clean();
     }
+
 }

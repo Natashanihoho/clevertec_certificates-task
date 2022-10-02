@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Data
 @Builder
 public class GiftCertificateReadDto {
@@ -16,6 +17,7 @@ public class GiftCertificateReadDto {
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
     private List<TagDto> tags;
+
     @Data
     public static class TagDto {
         private Integer id;

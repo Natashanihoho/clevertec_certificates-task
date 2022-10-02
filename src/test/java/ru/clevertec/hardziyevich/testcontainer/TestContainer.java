@@ -1,4 +1,4 @@
-package ru.clevertec.hardziyevich.configuration;
+package ru.clevertec.hardziyevich.testcontainer;
 
 import org.testcontainers.containers.PostgreSQLContainer;
 

@@ -1,6 +1,10 @@
 package ru.clevertec.hardziyevich.domain.certificate;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import ru.clevertec.hardziyevich.domain.tag.Tag;
@@ -54,6 +58,5 @@ public class GiftCertificate {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags = new ArrayList<>();
-
 
 }

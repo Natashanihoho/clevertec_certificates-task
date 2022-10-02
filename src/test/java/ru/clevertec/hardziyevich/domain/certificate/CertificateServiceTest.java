@@ -8,24 +8,22 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import ru.clevertec.hardziyevich.api.certificate.GiftCertificateMapper;
 import ru.clevertec.hardziyevich.api.certificate.GiftCertificatePostDto;
 import ru.clevertec.hardziyevich.api.certificate.GiftCertificateReadDto;
 import ru.clevertec.hardziyevich.api.tag.TagMapper;
-import ru.clevertec.hardziyevich.api.tag.TagPostDto;
-import ru.clevertec.hardziyevich.domain.tag.Tag;
 import ru.clevertec.hardziyevich.domain.tag.TagRepository;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CertificateServiceTest {
@@ -50,16 +48,17 @@ public class CertificateServiceTest {
 
     @BeforeEach
     void init() {
-        giftCertificatePostDto = giftCertificatePostDto();
-        giftCertificate = giftCertificate();
-        giftCertificateReadDto = giftCertificateReadDto();
+        giftCertificatePostDto = CertificateFactory.giftCertificatePostDto();
+        giftCertificate = CertificateFactory.giftCertificate();
+        giftCertificateReadDto = CertificateFactory.giftCertificateReadDto();
     }
 
     @Test
     public void createTest() {
         when(giftCertificateMapper.mapToGiftCertificate(giftCertificatePostDto))
                 .thenReturn(giftCertificate);
-        when(tagRepository.findByNameIn(any())).thenReturn(Collections.emptyList());
+        when(tagRepository.findByNameIn(any()))
+                .thenReturn(Collections.emptyList());
         giftCertificateService.create(giftCertificatePostDto);
         verify(giftCertificateRepository).save(giftCertificate);
     }
@@ -90,46 +89,19 @@ public class CertificateServiceTest {
         verify(giftCertificateRepository).delete(giftCertificate);
     }
 
-    private GiftCertificatePostDto giftCertificatePostDto() {
-        TagPostDto tag1 = new TagPostDto();
-        tag1.setName("tag1");
-
-        TagPostDto tag2 = new TagPostDto();
-        tag2.setName("tag2");
-
-        return GiftCertificatePostDto.builder()
-                .name("test_name")
-                .description("test_description")
-                .price(1.0)
-                .duration(1)
-                .tags(Arrays.asList(tag1, tag2))
-                .build();
+    @Test
+    public void findAllTest() {
+        PageRequest pageable = PageRequest.of(0, 2);
+        List<GiftCertificate> giftCertificates = new ArrayList<>();
+        giftCertificates.add(giftCertificate);
+        giftCertificates.add(giftCertificate);
+        when(giftCertificateRepository.findAll(any(), eq(pageable)))
+                .thenReturn(new PageImpl<>(giftCertificates));
+        when(giftCertificateMapper.mapToGiftCertificateReadDto(giftCertificate))
+                .thenReturn(giftCertificateReadDto, giftCertificateReadDto);
+        List<GiftCertificateReadDto> allAndSort = giftCertificateService.findAll(null, null, pageable);
+        assertEquals(2, allAndSort.size());
+        assertEquals(giftCertificateReadDto, allAndSort.get(0));
     }
 
-    private GiftCertificateReadDto giftCertificateReadDto() {
-
-        return GiftCertificateReadDto.builder()
-                .id(1)
-                .name("test_name")
-                .description("test_description")
-                .price(1.0)
-                .duration(1)
-                .build();
-    }
-
-    private GiftCertificate giftCertificate() {
-        Tag tag1 = new Tag();
-        tag1.setName("tag1");
-
-        Tag tag2 = new Tag();
-        tag2.setName("tag2");
-
-        return GiftCertificate.builder()
-                .name("test_name")
-                .description("test_description")
-                .price(1.0)
-                .duration(1)
-                .tags(Arrays.asList(tag1, tag2))
-                .build();
-    }
 }

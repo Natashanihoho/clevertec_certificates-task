@@ -1,41 +1,33 @@
 package ru.clevertec.hardziyevich.domain.certificate;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.clevertec.hardziyevich.configuration.RepositoryConfiguration;
+import org.springframework.data.domain.Pageable;
+import ru.clevertec.hardziyevich.testcontainer.RepositoryConfiguration;
+import ru.clevertec.hardziyevich.domain.tag.TagRepository;
 
-import java.util.Optional;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CertificateRepositoryTest extends RepositoryConfiguration {
 
     @Autowired
     private GiftCertificateRepository giftCertificateRepository;
 
+    @Autowired
+    private TagRepository tagRepository;
+
+    private final GiftCertificate giftCertificate = CertificateFactory.giftCertificate();
+
     @Test
     public void checkFindByName() {
-        GiftCertificate giftCertificate = GiftCertificate.builder()
-                .name("Certificate1")
-                .description("Some description")
-                .price(1.2)
-                .duration(1)
-                .build();
-
+        tagRepository.saveAll(giftCertificate.getTags());
         giftCertificateRepository.save(giftCertificate);
-
-        Optional<GiftCertificate> certificateOptional = giftCertificateRepository.findByName("Certificate1");
-        Assertions.assertTrue(certificateOptional.isPresent());
+        String name = giftCertificate.getTags().get(0).getName();
+        List<GiftCertificate> allByTagName = giftCertificateRepository.findAllByTagName(name, Pageable.ofSize(1));
+        allByTagName.forEach(System.out::println);
+        assertEquals(1, allByTagName.size());
     }
 
-    @Test
-    public void checkFindByNameIfCertificateIsAbsent() {
-
-        Optional<GiftCertificate> certificateOptional = giftCertificateRepository.findByName("Certificate2");
-        Assertions.assertFalse(certificateOptional.isPresent());
-    }
-
-    @Test
-    public void checkFindFirstByDescriptionContains() {
-        Optional<GiftCertificate> giftCertificate = giftCertificateRepository.findFirstByDescriptionContains("descript");
-        Assertions.assertTrue(giftCertificate.isPresent());
-    }
 }

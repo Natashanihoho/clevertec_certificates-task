@@ -31,4 +31,5 @@ public class GiftCertificateFieldUpdater implements UnaryOperator<GiftCertificat
                 .map(converter)
                 .ifPresent(consumer);
     }
+
 }

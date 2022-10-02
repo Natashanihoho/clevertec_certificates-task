@@ -1,6 +1,10 @@
 package ru.clevertec.hardziyevich.domain.tag;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
 import ru.clevertec.hardziyevich.domain.certificate.GiftCertificate;
 
 import javax.persistence.*;

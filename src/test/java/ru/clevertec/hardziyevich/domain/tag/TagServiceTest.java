@@ -6,12 +6,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.hardziyevich.api.exception.ApplicationException;
 import ru.clevertec.hardziyevich.api.tag.TagMapper;
 import ru.clevertec.hardziyevich.api.tag.TagPostDto;
 import ru.clevertec.hardziyevich.api.tag.TagReadDto;
-import ru.clevertec.hardziyevich.infrastructure.ApplicationException;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,9 +35,9 @@ public class TagServiceTest {
 
     @BeforeEach
     void init() {
-        tagPostDto = tagPostDto();
-        tag = tag();
-        tagReadDto = tagReadDto();
+        tagPostDto = TagFactory.tagPostDto();
+        tag = TagFactory.tag();
+        tagReadDto = TagFactory.tagReadDto();
     }
 
 
@@ -85,23 +84,4 @@ public class TagServiceTest {
         verify(tagRepository).delete(tag);
     }
 
-    private Tag tag() {
-        Tag tag = new Tag();
-        tag.setName("test");
-        tag.setGiftCertificates(Collections.emptyList());
-        return tag;
-    }
-
-    private TagPostDto tagPostDto() {
-        TagPostDto tagPostDto = new TagPostDto();
-        tagPostDto.setName("test_dto");
-        return tagPostDto;
-    }
-
-    private TagReadDto tagReadDto() {
-        TagReadDto tagReadDto = new TagReadDto();
-        tagReadDto.setId(1);
-        tagReadDto.setName("test_dto");
-        return tagReadDto;
-    }
 }

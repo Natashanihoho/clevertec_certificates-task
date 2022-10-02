@@ -1,10 +1,13 @@
-package ru.clevertec.hardziyevich.configuration;
+package ru.clevertec.hardziyevich.testcontainer;
 
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-@IT
+@SpringBootTest
+@ActiveProfiles("test")
 public abstract class RepositoryConfiguration {
 
     private static final PostgreSQLContainer<TestContainer> container = TestContainer.container();
@@ -15,4 +18,5 @@ public abstract class RepositoryConfiguration {
         dynamicPropertyRegistry.add("spring.datasource.username", container::getUsername);
         dynamicPropertyRegistry.add("spring.datasource.password", container::getPassword);
     }
+
 }

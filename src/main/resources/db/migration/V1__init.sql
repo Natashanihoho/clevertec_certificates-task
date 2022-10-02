@@ -10,7 +10,7 @@ CREATE TABLE gift_certificate (
 
 CREATE TABLE tag(
     id SERIAL PRIMARY KEY ,
-    name VARCHAR(128) NOT NULL
+    name VARCHAR(128) UNIQUE
 );
 
 CREATE TABLE certificate_tag (

@@ -3,7 +3,7 @@ package ru.clevertec.hardziyevich;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.clevertec.hardziyevich.configuration.RepositoryConfiguration;
+import ru.clevertec.hardziyevich.testcontainer.RepositoryConfiguration;
 import ru.clevertec.hardziyevich.domain.tag.Tag;
 import ru.clevertec.hardziyevich.domain.tag.TagRepository;
 
