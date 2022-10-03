@@ -3,6 +3,7 @@ package ru.clevertec.hardziyevich.api.certificate;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class GiftCertificateReadDto {
     private Integer id;
     private String name;
     private String description;
-    private Double price;
+    private BigDecimal price;
     private Integer duration;
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
@@ -23,5 +24,4 @@ public class GiftCertificateReadDto {
         private Integer id;
         private String name;
     }
-
 }

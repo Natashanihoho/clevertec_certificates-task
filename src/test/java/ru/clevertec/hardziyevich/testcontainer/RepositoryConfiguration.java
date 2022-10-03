@@ -18,5 +18,4 @@ public abstract class RepositoryConfiguration {
         dynamicPropertyRegistry.add("spring.datasource.username", container::getUsername);
         dynamicPropertyRegistry.add("spring.datasource.password", container::getPassword);
     }
-
 }

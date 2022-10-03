@@ -2,7 +2,7 @@ CREATE TABLE gift_certificate (
     id SERIAL PRIMARY KEY ,
     name VARCHAR(128) NOT NULL ,
     description VARCHAR(128) NOT NULL ,
-    price NUMERIC(8, 2) CHECK ( price > 0 ) ,
+    price DECIMAL NOT NULL ,
     duration INT CHECK ( duration > 0 ) ,
     create_date TIMESTAMP,
     last_update_date TIMESTAMP

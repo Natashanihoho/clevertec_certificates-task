@@ -26,5 +26,4 @@ public class TagFactory {
         tag.setGiftCertificates(Collections.emptyList());
         return tag;
     }
-
 }

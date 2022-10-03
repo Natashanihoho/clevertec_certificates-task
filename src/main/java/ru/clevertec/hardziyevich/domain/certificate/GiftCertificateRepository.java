@@ -10,5 +10,4 @@ public interface GiftCertificateRepository extends JpaRepository<GiftCertificate
 
     @Query("select g from GiftCertificate as g join Tag as t on t.name = :name")
     List<GiftCertificate> findAllByTagName(String name, Pageable pageable);
-
 }

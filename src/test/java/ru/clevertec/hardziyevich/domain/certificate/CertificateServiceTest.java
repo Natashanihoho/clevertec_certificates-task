@@ -103,5 +103,4 @@ public class CertificateServiceTest {
         assertEquals(2, allAndSort.size());
         assertEquals(giftCertificateReadDto, allAndSort.get(0));
     }
-
 }

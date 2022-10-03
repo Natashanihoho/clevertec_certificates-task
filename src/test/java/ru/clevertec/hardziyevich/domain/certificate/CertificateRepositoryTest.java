@@ -29,5 +29,4 @@ public class CertificateRepositoryTest extends RepositoryConfiguration {
         allByTagName.forEach(System.out::println);
         assertEquals(1, allByTagName.size());
     }
-
 }

@@ -8,5 +8,4 @@ import java.util.List;
 public interface TagRepository extends JpaRepository<Tag, Integer>, JpaSpecificationExecutor<Tag> {
 
     List<Tag> findByNameIn(List<String> names);
-
 }

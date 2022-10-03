@@ -9,5 +9,4 @@ public class ResponseError {
 
     private final String message;
     private final String errorCode;
-
 }

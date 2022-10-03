@@ -11,6 +11,7 @@ import ru.clevertec.hardziyevich.domain.tag.Tag;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,8 @@ public class GiftCertificate {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "price")
-    @Min(1)
-    private Double price;
+    @Column(name = "price", scale = 2)
+    private BigDecimal price;
 
     @Column(name = "duration")
     @Min(1)
@@ -57,6 +57,6 @@ public class GiftCertificate {
             joinColumns = @JoinColumn(name = "certificate_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> tags = new ArrayList<>();
 
+    private List<Tag> tags = new ArrayList<>();
 }

@@ -12,5 +12,4 @@ public enum ExceptionMessage {
     NOT_EXIST("%s does not exist with %s");
 
     private final String format;
-
 }

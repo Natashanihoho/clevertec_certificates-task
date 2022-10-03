@@ -5,6 +5,7 @@ import ru.clevertec.hardziyevich.api.certificate.GiftCertificateReadDto;
 import ru.clevertec.hardziyevich.api.tag.TagPostDto;
 import ru.clevertec.hardziyevich.domain.tag.Tag;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public class CertificateFactory {
@@ -17,7 +18,7 @@ public class CertificateFactory {
         return GiftCertificatePostDto.builder()
                 .name("test_name")
                 .description("test_description")
-                .price(1.0)
+                .price(new BigDecimal("1.0"))
                 .duration(1)
                 .tags(Arrays.asList(tag1, tag2))
                 .build();
@@ -28,7 +29,7 @@ public class CertificateFactory {
                 .id(1)
                 .name("test_name")
                 .description("test_description")
-                .price(1.0)
+                .price(new BigDecimal("1.0"))
                 .duration(1)
                 .build();
     }
@@ -41,7 +42,7 @@ public class CertificateFactory {
         return GiftCertificate.builder()
                 .name("test_name")
                 .description("test_description")
-                .price(1.0)
+                .price(new BigDecimal("1.0"))
                 .duration(1)
                 .tags(Arrays.asList(tag1, tag2))
                 .build();

@@ -18,5 +18,4 @@ public class FlywayMigration {
     private void destroy() {
         flyway.clean();
     }
-
 }

@@ -7,5 +7,4 @@ import ru.clevertec.hardziyevich.domain.certificate.GiftCertificate;
 public interface GiftCertificateMapper {
     GiftCertificateReadDto mapToGiftCertificateReadDto(GiftCertificate giftCertificate);
     GiftCertificate mapToGiftCertificate(GiftCertificatePostDto giftCertificatePostDto);
-
 }

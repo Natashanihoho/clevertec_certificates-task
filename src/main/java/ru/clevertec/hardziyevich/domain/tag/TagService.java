@@ -59,5 +59,4 @@ public class TagService {
                 .error(Error.TAG)
                 .build();
     }
-
 }

@@ -23,5 +23,4 @@ public class ApplicationExceptionSupplier implements Supplier<ApplicationExcepti
                 error
         );
     }
-
 }

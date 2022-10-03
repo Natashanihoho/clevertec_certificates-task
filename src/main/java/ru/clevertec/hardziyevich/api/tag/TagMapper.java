@@ -9,5 +9,4 @@ public interface TagMapper {
     TagReadDto mapToTagReadDto(Tag tag);
 
     Tag mapToTag(TagPostDto tagPostDto);
-
 }

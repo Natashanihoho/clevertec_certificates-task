@@ -104,5 +104,4 @@ public class GiftCertificateService {
                 .error(Error.GIFT_CERTIFICATE)
                 .build();
     }
-
 }

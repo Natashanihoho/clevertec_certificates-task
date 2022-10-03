@@ -22,5 +22,4 @@ public class TagReadDto {
         private LocalDateTime createDate;
         private LocalDateTime lastUpdateDate;
     }
-
 }

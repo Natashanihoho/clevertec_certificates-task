@@ -29,6 +29,4 @@ public class Tag {
     @Builder.Default
     @ManyToMany(mappedBy = "tags")
     private List<GiftCertificate> giftCertificates = new ArrayList<>();
-
-
 }
