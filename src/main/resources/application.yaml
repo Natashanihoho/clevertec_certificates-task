@@ -10,3 +10,15 @@ spring:
     password: postgres
     clean-disabled: false
     baseline-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+server:
+  servlet:
+    context-path: /api
