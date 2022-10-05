@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.api.exception.EntityNotFoundException;
-import ru.clevertec.ecl.api.exception.ErrorType;
+import ru.clevertec.ecl.api.exception.ErrorCode;
 import ru.clevertec.ecl.api.tag.TagMapper;
 import ru.clevertec.ecl.api.tag.TagPostDto;
 import ru.clevertec.ecl.api.tag.TagReadDto;
@@ -41,14 +41,14 @@ public class TagServiceImpl implements TagService {
                             return tag;
                         }
                 )
-                .orElseThrow(exception("Tag doesn't exist with id = " + id,HttpStatus.BAD_REQUEST));
+                .orElseThrow(exceptionSupplier(id));
     }
 
     @Override
     public TagReadDto findById(Integer id) {
         return tagRepository.findById(id)
                 .map(tagMapper::mapToTagReadDto)
-                .orElseThrow(exception("Tag doesn't exist with id = " + id,HttpStatus.BAD_REQUEST));
+                .orElseThrow(exceptionSupplier(id));
     }
 
     @Override
@@ -68,10 +68,13 @@ public class TagServiceImpl implements TagService {
                             return tag;
                         }
                 ).map(tagMapper::mapToTagReadDto)
-                .orElseThrow(exception("Tag doesn't exist with id = " + id,HttpStatus.BAD_REQUEST));
+                .orElseThrow(exceptionSupplier(id));
     }
 
-    private Supplier<EntityNotFoundException> exception(String message, HttpStatus httpStatus) {
-        return () -> new EntityNotFoundException(message,httpStatus,ErrorType.TAG);
+    private Supplier<EntityNotFoundException> exceptionSupplier(Integer id) {
+        return () -> new EntityNotFoundException(
+                "Tag is not found with id = " + id,
+                ErrorCode.TAG
+        );
     }
 }

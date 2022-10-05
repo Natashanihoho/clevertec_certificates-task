@@ -3,7 +3,7 @@ package ru.clevertec.ecl.domain.certificate;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
+import ru.clevertec.ecl.domain.order.Order;
 import ru.clevertec.ecl.domain.tag.Tag;
 
 import javax.persistence.*;
@@ -48,4 +48,7 @@ public class GiftCertificate {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "giftCertificate")
+    private List<Order> orders= new ArrayList<>();
 }

@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.api.certificate.GiftCertificateMapper;
 import ru.clevertec.ecl.api.certificate.GiftCertificatePostDto;
 import ru.clevertec.ecl.api.certificate.GiftCertificateReadDto;
 import ru.clevertec.ecl.api.exception.EntityNotFoundException;
-import ru.clevertec.ecl.api.exception.ErrorType;
+import ru.clevertec.ecl.api.exception.ErrorCode;
 import ru.clevertec.ecl.api.tag.TagMapper;
 import ru.clevertec.ecl.api.tag.TagPostDto;
 import ru.clevertec.ecl.domain.tag.Tag;
@@ -46,7 +45,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     @Override
     public void delete(Integer id) {
         GiftCertificate giftCertificate = giftCertificateRepository.findById(id)
-                .orElseThrow(exception("Certificate doesn't exist with id = " + id,HttpStatus.BAD_REQUEST));
+                .orElseThrow(exceptionSupplier(id));
         giftCertificateRepository.delete(giftCertificate);
     }
 
@@ -54,7 +53,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public GiftCertificateReadDto findById(Integer id) {
         return giftCertificateRepository.findById(id)
                 .map(giftCertificateMapper::mapToGiftCertificateReadDto)
-                .orElseThrow(exception("Certificate doesn't exist with id = " + id,HttpStatus.BAD_REQUEST));
+                .orElseThrow(exceptionSupplier(id));
     }
 
     @Override
@@ -91,7 +90,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
                 .map(giftCertificate ->
                     updateMapper.update(giftCertificate, giftCertificatePostDto))
                 .map(giftCertificateMapper::mapToGiftCertificateReadDto)
-                .orElseThrow(exception("Certificate doesn't exist with id = " + id,HttpStatus.BAD_REQUEST));
+                .orElseThrow(exceptionSupplier(id));
     }
 
     private List<Tag> checkAndSaveTags(GiftCertificatePostDto giftCertificatePostDto) {
@@ -110,7 +109,10 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         return savedTags;
     }
 
-    private Supplier<EntityNotFoundException> exception(String message, HttpStatus httpStatus) {
-        return () -> new EntityNotFoundException(message,httpStatus,ErrorType.GIFT_CERTIFICATE);
+    private Supplier<EntityNotFoundException> exceptionSupplier(Integer id) {
+        return () -> new EntityNotFoundException(
+                "Gift certificate is not found with id = " + id,
+                ErrorCode.CERTIFICATE
+        );
     }
 }

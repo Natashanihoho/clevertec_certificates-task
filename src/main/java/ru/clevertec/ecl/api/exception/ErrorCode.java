@@ -7,11 +7,13 @@ import lombok.experimental.Accessors;
 @RequiredArgsConstructor
 @Accessors(fluent = true)
 @Getter
-public enum ErrorType {
+public enum ErrorCode {
 
-    NOT_VALID_FIELD("00"),
-    GIFT_CERTIFICATE("01"),
-    TAG("02");
+    VALIDATION(0),
+    CERTIFICATE(1),
+    TAG(2),
+    USER(3),
+    ORDER(4);
 
-    private final String code;
+    private final int code;
 }
