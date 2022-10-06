@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.ecl.domain.tag.TagService;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/tags")
 @RequiredArgsConstructor
+@Validated
 public class TagController {
 
     private final TagService tagService;
@@ -34,7 +36,7 @@ public class TagController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TagReadDto> updateById(@PathVariable @Positive() Integer id, @RequestBody @Valid TagPostDto tagPostDto) {
+    public ResponseEntity<TagReadDto> updateById(@PathVariable @Positive Integer id, @RequestBody @Valid TagPostDto tagPostDto) {
         return ResponseEntity.ok(tagService.updateById(id, tagPostDto));
     }
 

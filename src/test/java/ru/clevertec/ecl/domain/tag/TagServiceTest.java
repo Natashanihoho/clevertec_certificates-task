@@ -15,13 +15,12 @@ import ru.clevertec.ecl.api.tag.TagReadDto;
 import ru.clevertec.ecl.domain.data.TagFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -78,9 +77,7 @@ public class TagServiceTest {
     @Test
     public void findAllTest() {
         PageRequest pageable = PageRequest.of(0, 2);
-        List<Tag> tags = new ArrayList<>();
-        tags.add(tag);
-        tags.add(tag);
+        List<Tag> tags = Arrays.asList(tag, tag);
         when(tagRepository.findAll(pageable))
                 .thenReturn(new PageImpl<>(tags));
         when(tagMapper.mapToTagReadDto(tag))

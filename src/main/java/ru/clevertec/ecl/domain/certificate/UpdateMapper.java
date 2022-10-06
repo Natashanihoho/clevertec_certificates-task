@@ -10,6 +10,7 @@ import ru.clevertec.ecl.api.tag.TagMapper;
 @Mapper(uses = TagMapper.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UpdateMapper {
 
+    @Mapping(target = "orders", ignore = true)
     @Mapping(target = "lastUpdateDate", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createDate", ignore = true)

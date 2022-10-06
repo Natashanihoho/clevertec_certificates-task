@@ -1,7 +1,8 @@
 package ru.clevertec.ecl.api.exception;
 
-import lombok.Builder;
+import lombok.*;
 
+@Data
 @Builder
 public class ResponseError {
 

@@ -56,9 +56,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
                 .orElseThrow(exceptionSupplier(id));
     }
 
-    @Override
-    public List<GiftCertificateReadDto> findAllByTag(String tagName, Pageable pageable) {
-        return giftCertificateRepository.findAllByTagName(tagName, pageable)
+    public List<GiftCertificateReadDto> findAllByTagNames(List<String> tags, Pageable pageable) {
+        return giftCertificateRepository.findAllByTagNames(tags,pageable)
                 .stream()
                 .map(giftCertificateMapper::mapToGiftCertificateReadDto)
                 .collect(toList());

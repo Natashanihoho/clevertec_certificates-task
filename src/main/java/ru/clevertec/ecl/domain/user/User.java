@@ -24,6 +24,7 @@ public class User {
 
     private String lastname;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 

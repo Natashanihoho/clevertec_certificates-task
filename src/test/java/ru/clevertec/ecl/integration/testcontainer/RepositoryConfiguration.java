@@ -11,12 +11,14 @@ public class RepositoryConfiguration {
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:latest");
 
     static {
-        container.withInitScript("db/migration/V1__init.sql");
         container.start();
     }
 
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry dynamicPropertyRegistry) {
+        dynamicPropertyRegistry.add("spring.flyway.url", container::getJdbcUrl);
+        dynamicPropertyRegistry.add("spring.flyway.user", container::getUsername);
+        dynamicPropertyRegistry.add("spring.flyway.password", container::getPassword);
         dynamicPropertyRegistry.add("spring.datasource.url", container::getJdbcUrl);
         dynamicPropertyRegistry.add("spring.datasource.username", container::getUsername);
         dynamicPropertyRegistry.add("spring.datasource.password", container::getPassword);

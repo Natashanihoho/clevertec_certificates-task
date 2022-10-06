@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface GiftCertificateRepository extends JpaRepository<GiftCertificate, Integer>{
+public interface GiftCertificateRepository extends JpaRepository<GiftCertificate, Integer> {
 
-    @EntityGraph(attributePaths = {"tags"},type = EntityGraph.EntityGraphType.LOAD)
-    @Query("select g from GiftCertificate as g join g.tags as t where t.name = :name")
-    List<GiftCertificate> findAllByTagName(String name, Pageable pageable);
+    @EntityGraph(attributePaths = {"tags"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("select g from GiftCertificate as g join g.tags as t where t.name in (:tagNames)")
+    List<GiftCertificate> findAllByTagNames(List<String> tagNames, Pageable pageable);
 }

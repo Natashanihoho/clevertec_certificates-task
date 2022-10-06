@@ -6,9 +6,10 @@ import ru.clevertec.ecl.domain.data.TagFactory;
 import ru.clevertec.ecl.integration.testcontainer.RepositoryConfiguration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TagRepositoryTest extends RepositoryConfiguration {
@@ -19,10 +20,9 @@ public class TagRepositoryTest extends RepositoryConfiguration {
     @Test
     public void checkFindByNameInTags() {
         Tag tag = TagFactory.tag();
-        List<Tag> tags = new ArrayList<>();
-        tags.add(tag);
+        List<Tag> tags = Arrays.asList(tag, tag);
         tagRepository.save(tag);
-        List<Tag> existedTags = tagRepository.findByNameIn(tags.stream().map(Tag::getName).collect(Collectors.toList()));
+        List<Tag> existedTags = tagRepository.findByNameIn(tags.stream().map(Tag::getName).collect(toList()));
         assertEquals(1, existedTags.size());
     }
 

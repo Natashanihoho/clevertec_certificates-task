@@ -14,9 +14,9 @@ public interface GiftCertificateService {
 
     GiftCertificateReadDto findById(Integer id);
 
-    List<GiftCertificateReadDto> findAllByTag(String tagName, Pageable pageable);
-
     List<GiftCertificateReadDto> findAll(String name, String description, Pageable pageable);
 
     GiftCertificateReadDto updateById(Integer id, GiftCertificatePostDto giftCertificatePostDto);
+
+    List<GiftCertificateReadDto> findAllByTagNames(List<String> tagNames, Pageable pageable);
 }

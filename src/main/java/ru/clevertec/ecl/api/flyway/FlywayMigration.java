@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 
 @Component
-@Profile("!test")
 @RequiredArgsConstructor
 public class FlywayMigration {
 

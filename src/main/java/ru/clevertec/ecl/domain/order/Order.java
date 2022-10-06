@@ -26,7 +26,6 @@ public class Order {
     @JoinColumn(name = "users_id")
     private User user;
 
-
     @ManyToOne
     @JoinColumn(name = "certificate_id")
     private GiftCertificate giftCertificate;
@@ -34,5 +33,5 @@ public class Order {
     private BigDecimal cost;
 
     @CreationTimestamp
-    private LocalDateTime purchase_date;
+    private LocalDateTime purchaseDate;
 }

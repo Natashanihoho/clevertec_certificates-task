@@ -30,9 +30,9 @@ public class GiftCertificateController {
         return ResponseEntity.ok(giftCertificateService.findById(id));
     }
 
-    @GetMapping("/tag/{name}")
-    public ResponseEntity<List<GiftCertificateReadDto>> findAllByTag(@PathVariable String name, Pageable pageable) {
-        return ResponseEntity.ok(giftCertificateService.findAllByTag(name, pageable));
+    @GetMapping("/tags/{tagNames}")
+    public ResponseEntity<List<GiftCertificateReadDto>> findAllByTags(@PathVariable List<String> tagNames, Pageable pageable) {
+        return ResponseEntity.ok(giftCertificateService.findAllByTagNames(tagNames, pageable));
     }
 
     @GetMapping

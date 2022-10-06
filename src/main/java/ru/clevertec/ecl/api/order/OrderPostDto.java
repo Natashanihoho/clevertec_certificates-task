@@ -1,7 +1,12 @@
 package ru.clevertec.ecl.api.order;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public class OrderPostDto {
 
-    Integer giftCertificateId;
-    Integer userId;
+    private Integer giftCertificateId;
+    private Integer userId;
 }

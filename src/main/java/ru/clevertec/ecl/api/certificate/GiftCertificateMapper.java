@@ -10,6 +10,7 @@ public interface GiftCertificateMapper {
 
     GiftCertificateReadDto mapToGiftCertificateReadDto(GiftCertificate giftCertificate);
 
+    @Mapping(target = "orders", ignore = true)
     @Mapping(target = "lastUpdateDate", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createDate", ignore = true)

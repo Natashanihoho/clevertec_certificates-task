@@ -49,6 +49,7 @@ public class GiftCertificate {
     )
     private List<Tag> tags = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "giftCertificate")
     private List<Order> orders= new ArrayList<>();
 }
