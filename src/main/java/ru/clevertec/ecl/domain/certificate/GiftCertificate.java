@@ -14,7 +14,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = "tags")
+@EqualsAndHashCode(exclude = {"tags", "orders"})
 @Entity
 @Builder
 @NoArgsConstructor
@@ -51,5 +51,5 @@ public class GiftCertificate {
 
     @Builder.Default
     @OneToMany(mappedBy = "giftCertificate")
-    private List<Order> orders= new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 }

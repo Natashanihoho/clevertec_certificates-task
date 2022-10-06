@@ -17,4 +17,6 @@ public interface TagService {
     List<TagReadDto> findAll(Pageable pageable);
 
     TagReadDto updateById(Integer id, TagPostDto tagPostDto);
+
+    TagReadDto findMostPopularTag();
 }

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(exclude = {"giftCertificate", "user"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

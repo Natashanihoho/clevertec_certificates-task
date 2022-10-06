@@ -2,7 +2,6 @@ package ru.clevertec.ecl.domain.tag;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.api.exception.EntityNotFoundException;
@@ -57,6 +56,13 @@ public class TagServiceImpl implements TagService {
                 .stream()
                 .map(tagMapper::mapToTagReadDto)
                 .collect(toList());
+    }
+
+    @Override
+    public TagReadDto findMostPopularTag() {
+        return tagRepository.findMostPopularTag()
+                .map(tagMapper::mapToTagReadDto)
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override

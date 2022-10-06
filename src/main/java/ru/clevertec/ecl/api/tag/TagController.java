@@ -45,4 +45,9 @@ public class TagController {
         tagService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/popular")
+    public ResponseEntity<TagReadDto> findMostPopularTag() {
+        return ResponseEntity.ok(tagService.findMostPopularTag());
+    }
 }

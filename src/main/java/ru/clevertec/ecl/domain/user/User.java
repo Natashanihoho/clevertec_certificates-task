@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(exclude = "orders")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
