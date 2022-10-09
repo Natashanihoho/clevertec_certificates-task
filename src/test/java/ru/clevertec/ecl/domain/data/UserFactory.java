@@ -1,6 +1,5 @@
 package ru.clevertec.ecl.domain.data;
 
-import org.junit.jupiter.api.Test;
 import ru.clevertec.ecl.api.user.UserReadDto;
 import ru.clevertec.ecl.domain.user.User;
 

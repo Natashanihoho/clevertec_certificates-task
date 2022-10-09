@@ -12,7 +12,7 @@ import ru.clevertec.ecl.api.user.UserReadDto;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional(readOnly = true)

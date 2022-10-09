@@ -14,7 +14,6 @@ import ru.clevertec.ecl.api.tag.TagPostDto;
 import ru.clevertec.ecl.api.tag.TagReadDto;
 import ru.clevertec.ecl.domain.data.TagFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

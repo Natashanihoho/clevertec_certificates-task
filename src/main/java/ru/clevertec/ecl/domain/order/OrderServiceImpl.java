@@ -4,13 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.clevertec.ecl.api.certificate.GiftCertificateMapper;
 import ru.clevertec.ecl.api.exception.EntityNotFoundException;
 import ru.clevertec.ecl.api.exception.ErrorCode;
 import ru.clevertec.ecl.api.order.OrderMapper;
 import ru.clevertec.ecl.api.order.OrderPostDto;
 import ru.clevertec.ecl.api.order.OrderReadDto;
-import ru.clevertec.ecl.api.user.UserMapper;
 import ru.clevertec.ecl.domain.certificate.GiftCertificate;
 import ru.clevertec.ecl.domain.certificate.GiftCertificateRepository;
 import ru.clevertec.ecl.domain.user.User;
@@ -19,7 +17,7 @@ import ru.clevertec.ecl.domain.user.UserRepository;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional(readOnly = true)
