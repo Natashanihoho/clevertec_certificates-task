@@ -1,0 +1,4 @@
+spring:
+  flyway:
+    clean-disabled: false
+    baseline-on-migrate: true
