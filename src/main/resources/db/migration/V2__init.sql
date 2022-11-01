@@ -15,5 +15,5 @@ CREATE TABLE orders
 );
 
 insert into users (firstname, lastname)
-values ('Natasha', 'Hard'),
-       ('Yana', 'Bur')
+values ('Aaaa', 'Bbbb'),
+       ('Cccc', 'Dddd');

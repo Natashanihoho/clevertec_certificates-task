@@ -1,26 +1,30 @@
 package ru.clevertec.ecl.api.certificate;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.clevertec.ecl.api.tag.TagPostDto;
 
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class GiftCertificatePostDto {
 
-    String name;
+    private String name;
 
-    String description;
-
-    @Positive
-    BigDecimal price;
+    private String description;
 
     @Positive
-    Integer duration;
+    private BigDecimal price;
 
-    List<TagPostDto> tags;
+    @Positive
+    private Integer duration;
+
+    private List<TagPostDto> tags;
 }

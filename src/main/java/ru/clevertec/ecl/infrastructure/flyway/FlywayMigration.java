@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.api.flyway;
+package ru.clevertec.ecl.infrastructure.flyway;
 
 import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;
