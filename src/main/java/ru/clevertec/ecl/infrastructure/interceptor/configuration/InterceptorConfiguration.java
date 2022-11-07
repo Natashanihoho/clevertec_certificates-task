@@ -1,23 +1,24 @@
 package ru.clevertec.ecl.infrastructure.interceptor.configuration;
 
-import lombok.RequiredArgsConstructor;
+import java.util.EnumMap;
+import java.util.List;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import ru.clevertec.ecl.infrastructure.interceptor.DeleteInterceptor;
-import ru.clevertec.ecl.infrastructure.interceptor.GetInterceptor;
-import ru.clevertec.ecl.infrastructure.interceptor.MethodInterceptor;
-import ru.clevertec.ecl.infrastructure.interceptor.PostInterceptor;
-import ru.clevertec.ecl.infrastructure.interceptor.PutInterceptor;
-import ru.clevertec.ecl.infrastructure.interceptor.order.OrderDeleteInterceptor;
+import lombok.RequiredArgsConstructor;
+import ru.clevertec.ecl.infrastructure.interceptor.*;
 import ru.clevertec.ecl.infrastructure.interceptor.order.OrderGetInterceptor;
 import ru.clevertec.ecl.infrastructure.interceptor.order.OrderPostInterceptor;
-import ru.clevertec.ecl.infrastructure.interceptor.order.OrderPutInterceptor;
 
-import java.util.EnumMap;
-
+@ConditionalOnProperty(prefix = "node", name = "number", havingValue = "1")
 @Configuration
 @RequiredArgsConstructor
 public class InterceptorConfiguration extends WebMvcConfigurationSupport {
@@ -28,9 +29,7 @@ public class InterceptorConfiguration extends WebMvcConfigurationSupport {
     private final PutInterceptor putInterceptor;
 
     private final OrderGetInterceptor orderGetInterceptor;
-    private final OrderDeleteInterceptor orderDeleteInterceptor;
     private final OrderPostInterceptor orderPostInterceptor;
-    private final OrderPutInterceptor orderPutInterceptor;
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
@@ -41,22 +40,26 @@ public class InterceptorConfiguration extends WebMvcConfigurationSupport {
         router.put(HttpMethod.PUT, putInterceptor);
         EnumMap<HttpMethod, HandlerInterceptor> orderRouter = new EnumMap<>(HttpMethod.class);
         orderRouter.put(HttpMethod.GET, orderGetInterceptor);
-        orderRouter.put(HttpMethod.DELETE, orderDeleteInterceptor);
         orderRouter.put(HttpMethod.POST, orderPostInterceptor);
-        orderRouter.put(HttpMethod.PUT, orderPutInterceptor);
         registry.addInterceptor(new MethodInterceptor(router))
                 .addPathPatterns(
                         "/**/tags/?",
-                        "/**/tags",
-                        "/**/certificates",
+                        "/**/tags/**",
+                        "/**/certificates/**",
                         "/**/certificates/?",
-                        "/**/users",
+                        "/**/users/**",
                         "/**/users/?"
                 );
         registry.addInterceptor(new MethodInterceptor(orderRouter))
                 .addPathPatterns(
-                        "/**/orders",
+                        "/**/orders**",
                         "/**/orders/?"
                 );
     }
+
+    @Override
+    protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
+    }
+
 }

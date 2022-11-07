@@ -3,6 +3,7 @@ package ru.clevertec.ecl.infrastructure.node;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -10,25 +11,13 @@ import java.util.List;
 public class Node {
 
     private int number;
-    private List<String> urls;
-    private String nextNodeUrl;
-
-    public boolean isLast() {
-        return number == getNumber();
-    }
-
-    public boolean isMain() {
-        return number == 1;
-    }
+    private int capacity;
+    private List<SubNode> subNodes = new ArrayList<>();
 
     @Data
-    public static class Ports {
-        private int firstPort;
-        private int secondPort;
-        private int thirdPort;
+    public static class SubNode {
+        private int number;
+        private String url;
     }
 
-    public int getCapacity() {
-        return urls.size() + 1;
-    }
 }

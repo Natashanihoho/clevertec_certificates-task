@@ -19,7 +19,6 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
         this.cachedBody = StreamUtils.copyToByteArray(request.getInputStream());
     }
 
-
     @Override
     public ServletInputStream getInputStream() {
         return new CachedBodyServletInputStream(cachedBody);

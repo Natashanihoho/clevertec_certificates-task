@@ -1,24 +1,24 @@
 package ru.clevertec.ecl.domain.order;
 
-import lombok.RequiredArgsConstructor;
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
+import java.util.function.Supplier;
+import javax.annotation.PostConstruct;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import ru.clevertec.ecl.api.exception.EntityNotFoundException;
 import ru.clevertec.ecl.api.exception.ErrorCode;
 import ru.clevertec.ecl.api.order.OrderMapper;
 import ru.clevertec.ecl.api.order.OrderPostDto;
 import ru.clevertec.ecl.api.order.OrderReadDto;
-import ru.clevertec.ecl.domain.certificate.GiftCertificate;
-import ru.clevertec.ecl.domain.certificate.GiftCertificateRepository;
-import ru.clevertec.ecl.domain.user.User;
-import ru.clevertec.ecl.domain.user.UserRepository;
+import ru.clevertec.ecl.api.order.OrderSequenceDto;
+import ru.clevertec.ecl.infrastructure.node.Node;
 
-import java.util.List;
-import java.util.function.Supplier;
-
-import static java.util.stream.Collectors.toList;
-
+@Log4j2
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -26,9 +26,13 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final Node node;
 
-    private final GiftCertificateRepository giftCertificateRepository;
-    private final UserRepository userRepository;
+    @PostConstruct
+    void setStartValueId() {
+        log.info(orderRepository.setSequence(node.getNumber()));
+        node.getSubNodes().forEach(sub -> log.info(sub.getUrl()));
+    }
 
     @Override
     public OrderReadDto findById(Integer id) {
@@ -45,17 +49,35 @@ public class OrderServiceImpl implements OrderService {
                 .collect(toList());
     }
 
+    @Override
+    public List<OrderReadDto> findAllById(Integer min, Integer max) {
+        return orderRepository.findAllByIdGreaterThanAndIdLessThanEqual(min,max)
+                .stream()
+                .map(orderMapper::mapToOrderReadDto)
+                .collect(toList());
+    }
+
     @Transactional
     @Override
     public OrderReadDto makeOrder(OrderPostDto orderPostDto) {
-        GiftCertificate giftCertificate = giftCertificateRepository.findById(orderPostDto.getGiftCertificateId())
-                .orElseThrow(exceptionSupplier("Certificate in order is not found with id = "
-                        + orderPostDto.getGiftCertificateId()));
-        User user = userRepository.findById(orderPostDto.getUserId())
-                .orElseThrow(exceptionSupplier("User in order is not found with id = "
-                        + orderPostDto.getUserId()));
-        Order order = orderRepository.save(orderMapper.mapToOrder(user, giftCertificate));
-        return orderMapper.mapToOrderReadDto(order);
+        GiftCertificateAndUser giftCertificateAndUser = orderRepository.findGiftCertificateAndUser(
+                        orderPostDto.getUserId(), orderPostDto.getGiftCertificateId())
+                .orElseThrow(exceptionSupplier("User or Certificate in order are not found"));
+        return orderMapper.mapToOrderReadDto(
+                orderRepository.save(
+                        orderMapper.mapToOrder(
+                                giftCertificateAndUser.getUser(), giftCertificateAndUser.getGiftCertificate()
+                        )
+                )
+        );
+    }
+
+    @Override
+    public OrderSequenceDto sequence() {
+        return OrderSequenceDto.builder()
+                .sequence(orderRepository.sequence())
+                .isFirstOrderSaved(orderRepository.existsById(node.getNumber()))
+                .build();
     }
 
     private Supplier<EntityNotFoundException> exceptionSupplier(String message) {
