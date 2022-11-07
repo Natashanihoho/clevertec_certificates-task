@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+  db_first:
+    container_name: ${DB_FIRST_NAME}
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+  nodefirst:
+    container_name: ${NODE_FIRST_NAME}
+    image: 'certificates-task:0.0.1-SNAPSHOT'
+    depends_on:
+      - db_first
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_FIRST_NAME}:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - SERVER_PORT=${NODE_FIRST_PORT}
+      - NODE_NUMBER=1
+      - NODE_CAPACITY=${NODE_CAPACITY}
+      - NODE_SUBNODES__[0]__NUMBER=2
+      - NODE_SUBNODES__[0]__URL=${NODE_SECOND_URL}
+      - NODE_SUBNODES__[1]__NUMBER=3
+      - NODE_SUBNODES__[1]__URL=${NODE_THIRD_URL}
+    restart: always
+    ports:
+      - "8080:${NODE_FIRST_PORT}"
+  db_second:
+    container_name: ${DB_SECOND_NAME}
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+  nodesecond:
+    container_name: ${NODE_SECOND_NAME}
+    image: 'certificates-task:0.0.1-SNAPSHOT'
+    depends_on:
+      - db_second
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_SECOND_NAME}:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - SERVER_PORT=${NODE_SECOND_PORT}
+      - NODE_NUMBER=2
+      - NODE_CAPACITY=${NODE_CAPACITY}
+    restart: always
+  db_third:
+    container_name: ${DB_THIRD_NAME}
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+  nodethird:
+    container_name: ${NODE_THIRD_NAME}
+    image: 'certificates-task:0.0.1-SNAPSHOT'
+    depends_on:
+      - db_third
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_THIRD_NAME}:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - SERVER_PORT=${NODE_THIRD_PORT}
+      - NODE_NUMBER=3
+      - NODE_CAPACITY=${NODE_CAPACITY}
+    restart: always

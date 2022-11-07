@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: das2632337
+#  jpa:
+#    hibernate:
+#      ddl-auto: validate
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+server:
+  port: 8080
+node:
+  number: 1
+  capacity: 3
+  subNodes:
+    - number: 2
+      url: http://localhost:8081
+    - number: 3
+      url: http://localhost:8082

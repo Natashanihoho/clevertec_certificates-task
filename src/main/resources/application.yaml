@@ -1,0 +1,10 @@
+spring:
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    clean-disabled: false
+    baseline-on-migrate: true
+server:
+  servlet:
+    context-path: /api
